@@ -1,0 +1,27 @@
+{
+	"ident": 1126,
+	"order": 16397,
+	"objtype": "kLabel",
+	"properties": {
+		"align": "kRightJst",
+		"backcolor": "kColorBackFill",
+		"backpattern": 15,
+		"designactive": true,
+		"edgefloat": "kEFnone",
+		"fieldstyle": "CtrlLabel",
+		"font": 5,
+		"fontsize": 0,
+		"fontstyle": "kPlain",
+		"forecolor": "kColorForeFill",
+		"height": 21,
+		"left": 5,
+		"objlink": 65537,
+		"text": "Server character set",
+		"textcolor": "kColorWindowText",
+		"top": 220,
+		"userinfo": "",
+		"vertcentertext": true,
+		"visible": true,
+		"width": 180
+	}
+}

@@ -1,0 +1,54 @@
+Do $objects.oFTPWorker.$newref() Returns iFtp
+Do iFtp.$setCallingInst($cinst)
+
+Do iServerList.$define(iServerURI,iUser,iPassword,iRequireSecureConnection)
+Do iServerList.$add("ftp://127.0.0.1","","",kFalse)
+Do iServerList.$line.$assign(1)
+Do iServerList.$loadcols()
+
+Do iLogTypeList.$define(iLogTypeChar,iLogType,iUsesHTML)
+Do iLogTypeList.$add("No logging",kOW3logNone,kFalse)
+Do iLogTypeList.$add("Basic logging (HTML)",kOW3logBasic+kOW3logHTML,kTrue)
+Do iLogTypeList.$add("Basic and data logging (HTML)",kOW3logBasic+kOW3logData+kOW3logHTML,kTrue)
+Do iLogTypeList.$add("Full logging (HTML)",kOW3logBasic+kOW3logData+kOW3logSecureData+kOW3logHTML,kTrue)
+Do iLogTypeList.$add("Basic logging",kOW3logBasic,kFalse)
+Do iLogTypeList.$add("Basic and data logging",kOW3logBasic+kOW3logData,kFalse)
+Do iLogTypeList.$add("Full logging",kOW3logBasic+kOW3logData+kOW3logSecureData,kFalse)
+Calculate iLogTypeList.$line as 4
+
+Do iActionList.$define(iActionChar,iActionConst)
+Do iActionList.$add("kOW3ftpActionListDirectory",kOW3ftpActionListDirectory)
+Do iActionList.$add("kOW3ftpActionPutFile",kOW3ftpActionPutFile)
+Do iActionList.$add("kOW3ftpActionGetFile",kOW3ftpActionGetFile)
+Do iActionList.$add("kOW3ftpActionDelete",kOW3ftpActionDelete)
+Do iActionList.$add("kOW3ftpActionCreateDirectory",kOW3ftpActionCreateDirectory)
+Do iActionList.$add("kOW3ftpActionSetPermissions",kOW3ftpActionSetPermissions)
+Do iActionList.$add("kOW3ftpActionExecute",kOW3ftpActionExecute)
+Do iActionList.$add("kOW3ftpActionAppendFile",kOW3ftpActionAppendFile)
+Calculate iActionList.$line as 1
+Calculate $cinst.$objs.tabpane.$objs.PagedPane.$currentpage as 6
+
+Do iServerCharsetList.$define(iServerCharset,iServerCharsetConst)
+Do iServerCharsetList.$add("kUniTypeAuto",kUniTypeAuto)
+Do iServerCharsetList.$add("kUniTypeUTF8",kUniTypeUTF8)
+Calculate lBaseName as "kUniTypeAnsi"
+Calculate lNames as "Arabic,Baltic,CentralEuropean,Cyrillic,Greek,Hebrew,Latin1,Thai,Turkish,Vietnamese"
+While 1
+	Calculate lName as strtok('lNames',',')
+	If lName=''
+		Break to end of loop
+	End If
+	Do iServerCharsetList.$add(con(lBaseName,lName),[con(lBaseName,lName)])
+End While
+Calculate lBaseName as "kUniTypeISO8859_"
+For lNum from 1 to 16 step 1
+	If lNum<>12
+		Do iServerCharsetList.$add(con(lBaseName,lNum),[con(lBaseName,lNum)])
+	End If
+End For
+Calculate iServerCharsetList.$line as 1
+
+Do method addObrowserIfSupported
+
+Do iCommandList.$define(iCommand)
+Do iCommandList.$add()

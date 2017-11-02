@@ -1,0 +1,44 @@
+;  Prepare the worker
+Do method setupLogging
+Calculate iFtp.$timeout as iTimeout
+Calculate iFtp.$callprogress as iCallProgress
+Calculate iFtp.$keepconnectionopen as iKeepConnectionOpen
+Calculate iFtp.$requiresecureconnection as iRequireSecureConnection
+Calculate iFtp.$servercharset as iServerCharsetList.C2
+Calculate iFtp.$responsepath as iResponsePath
+If iActionList.C2=kOW3ftpActionPutFile|iActionList.C2=kOW3ftpActionAppendFile
+	If iSendContentMode=0
+		ReadBinFile (iContentPath,iContent)
+		Do iFtp.$init(iServerURI,iUser,iPassword,iActionList.C2,iServerPath,iContent) Returns lOk
+	Else
+		Do iFtp.$init(iServerURI,iUser,iPassword,iActionList.C2,iServerPath,row(iContentPath)) Returns lOk
+	End If
+Else If iActionList.C2=kOW3ftpActionSetPermissions
+	Do iFtp.$init(iServerURI,iUser,iPassword,iActionList.C2,iServerPath,iPermissions) Returns lOk
+Else If iActionList.C2=kOW3ftpActionExecute
+	Do iFtp.$init(iServerURI,iUser,iPassword,iActionList.C2,iServerPath,iCommandList) Returns lOk
+Else If iActionList.C2=kOW3ftpActionListDirectory
+	Do iFtp.$init(iServerURI,iUser,iPassword,iActionList.C2,iServerPath,iNamesOnly) Returns lOk
+Else If iActionList.C2=kOW3ftpActionDelete
+	Do iFtp.$init(iServerURI,iUser,iPassword,iActionList.C2,iServerPath,iPathIsDirectory) Returns lOk
+Else
+	Do iFtp.$init(iServerURI,iUser,iPassword,iActionList.C2,iServerPath) Returns lOk
+End If
+If not(lOk)
+	OK message  {$init error [iFtp.$errorcode]: [iFtp.$errortext]}
+	Quit method kFalse
+End If
+If pRun
+	Do iFtp.$run() Returns lOk
+Else
+	Do iFtp.$start() Returns lOk
+End If
+If not(lOk)
+	OK message  {$run error [iFtp.$errorcode]: [iFtp.$errortext]}
+	Quit method kFalse
+Else If not(pRun)
+	Calculate $cinst.$objs.scrollbox.$objs.cancel.$enabled as kTrue
+	Calculate $cinst.$objs.scrollbox.$objs.start.$enabled as kFalse
+	Calculate $cinst.$objs.scrollbox.$objs.startthencancel.$enabled as kFalse
+End If
+Quit method kTrue
