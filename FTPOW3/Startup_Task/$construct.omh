@@ -1,0 +1,2 @@
+Open window instance wFTPAbout/CEN
+Do $clib.$windows.wFTP.$openonce('*',kWindowCenter)
