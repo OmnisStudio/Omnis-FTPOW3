@@ -1,0 +1,4 @@
+On evClick     ;; Event Parameters - pRow( Itemreference )
+	If not(isnull(iFtp))
+		Do iFtp.$cancel()
+	End If

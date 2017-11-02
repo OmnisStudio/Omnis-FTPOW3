@@ -1,0 +1,16 @@
+On evClick     ;; Event Parameters - pRow ( Itemreference )
+	Calculate lNewPage as 1
+	If iActionList.C2=kOW3ftpActionPutFile|iActionList.C2=kOW3ftpActionAppendFile
+		Calculate lNewPage as 2
+	Else If iActionList.C2=kOW3ftpActionSetPermissions
+		Calculate lNewPage as 3
+	Else If iActionList.C2=kOW3ftpActionExecute
+		Calculate lNewPage as 4
+	Else If iActionList.C2=kOW3ftpActionGetFile
+		Calculate lNewPage as 5
+	Else If iActionList.C2=kOW3ftpActionListDirectory
+		Calculate lNewPage as 6
+	Else If iActionList.C2=kOW3ftpActionDelete
+		Calculate lNewPage as 7
+	End If
+	Calculate $cinst.$objs.tabpane.$objs.PagedPane.$currentpage as lNewPage

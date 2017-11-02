@@ -1,0 +1,5 @@
+On evTabSelected     ;; Event Parameters - pTabNumber ( integer )
+	If pTabNumber=4
+		Do OXML.$formatbinaschar(iResponse.fileData) Returns iFormattedResponseContent
+		Do $cinst.$objs.tabpane.$objs.responsecontent.$redraw()
+	End If
